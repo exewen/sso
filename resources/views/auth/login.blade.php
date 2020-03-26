@@ -36,6 +36,11 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                                @error('redirect')
+                                <span class="" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
                         </div>
 
