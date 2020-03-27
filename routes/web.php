@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'SsoController@index')->name('sso');
+Route::get('/we', 'SsoController@index')->name('sso');
+
+

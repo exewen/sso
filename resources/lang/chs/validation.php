@@ -148,7 +148,7 @@ return [
     'attributes' => [
         'email' => '邮箱',
         'password' => '密码',
-        'redirect' => '子系统',
+        'source' => '资源系统',
     ],
 
 ];

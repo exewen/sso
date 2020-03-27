@@ -10,7 +10,9 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
+                        <input type="hidden" name="source" value="{{Request::input('source')}}">
+                        <input type="hidden" name="appid" value="{{Request::input('appid')}}">
+                        <input type="hidden" name="appsecret" value="{{Request::input('appsecret')}}">
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('view.email') }}</label>
 
@@ -33,11 +35,6 @@
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                                @error('redirect')
-                                <span class="" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

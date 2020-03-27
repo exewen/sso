@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Controller
 {
@@ -44,7 +46,18 @@ class LoginController extends Controller
         $request->validate([
             $this->username() => 'required|string',
             'password' => 'required|string',
-            'redirect' => 'required|string',
         ]);
     }
+
+    protected function authenticated(Request $request, $user)
+    {
+        $ticket = ($request->getClientIp() . $user->id . time());
+        $source = $request->input('source');
+        Cache::put($ticket, $user->id, 120);
+        if ($source) {
+            $url = $source . '?ticket=' . $ticket;
+            return redirect($url);
+        }
+    }
+
 }
