@@ -7,7 +7,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Sso;
 
 class LoginController extends Controller
 {
@@ -41,6 +43,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * 登录验证
+     * @param Request $request
+     */
     protected function validateLogin(Request $request)
     {
         $request->validate([
@@ -49,14 +55,16 @@ class LoginController extends Controller
         ]);
     }
 
+    /**
+     * 登录回调
+     * @param Request $request
+     * @param $user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     protected function authenticated(Request $request, $user)
     {
-        $ticket = ($request->getClientIp() . $user->id . time());
-        $source = $request->input('source');
-        Cache::put($ticket, $user->id, 120);
-        if ($source) {
-            $url = $source . '?ticket=' . $ticket;
-            return redirect($url);
+        if ($source = Sso::redirect($request, $user)) {
+            return $source;
         }
     }
 

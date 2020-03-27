@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Auth::routes();
-
-Route::get('/', 'SsoController@index')->name('sso');
-Route::get('/we', 'SsoController@index')->name('sso');
+// 管理页面
+Route::get('/', 'SsoController@index')->name('home');
 
 

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    SSO 控制台
                 </div>
             </div>
         </div>

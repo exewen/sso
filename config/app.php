@@ -227,6 +227,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        // Sso服务
+        'Sso' => App\Services\Sso\Facades\Sso::class,
+
     ],
 
 ];

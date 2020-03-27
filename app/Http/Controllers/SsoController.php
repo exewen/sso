@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SsoController extends Controller
 {
@@ -21,17 +22,9 @@ class SsoController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-//        dd(\Auth::user());
         return view('home');
     }
 
-    private function getTicketUrl($source)
-    {
-        $ticket = md5(time()+key);
-        Cache::put($ticket, $user, 120);
-        $url = $source . '?ticket=' . $ticket;
-        return $url;
-    }
 }
