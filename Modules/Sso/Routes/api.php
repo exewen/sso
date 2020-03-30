@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/sso', function (Request $request) {
-    return $request->user();
+//Route::middleware('auth:api')->get('/sso', function (Request $request) {
+//    return $request->user();
+//});
+Route::group(['prefix' => 'sso','namespace'=>'master', 'middleware' => ['api']], function () {
+    Route::get('/ticket_auth', 'SsoAuthController@ticketAuth');
 });
+

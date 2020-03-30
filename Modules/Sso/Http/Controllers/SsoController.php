@@ -5,6 +5,7 @@ namespace Modules\Sso\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Modules\Sso\Services\SsoService;
 
 class SsoController extends Controller
 {
@@ -12,8 +13,11 @@ class SsoController extends Controller
      * Display a listing of the resource.
      * @return Response
      */
-    public function index()
+    public function index(Request $request, SsoService $ssoService)
     {
+        $user = \Auth::user();
+        $response = $ssoService->redirect($request, $user);
+        if ($response !== false) return $response;
         return view('home');
         //return view('sso::index');
     }
