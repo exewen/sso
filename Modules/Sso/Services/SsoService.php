@@ -1,6 +1,7 @@
 <?php
 
 namespace Modules\Sso\Services;
+
 use Illuminate\Support\Facades\Cache;
 
 class SsoService
@@ -18,19 +19,19 @@ class SsoService
         $source = $request->input('source');
         Cache::put($ticket, $user->id, 120);
         if ($source) {
-            $url = $source . '&ticket=' . $ticket;
+            $url = $source . '?ticket=' . $ticket;
             return redirect($url);
         }
         return false;
     }
 
-    public function auth($request)
+    public function ticketAuth($request)
     {
-        dd($request->all());
         $userId = Cache::pull($request->input('ticket'));
-        dd($userId);
-        if($userId){
-            return [$userId];
+        if ($userId) {
+            return [
+                'user_id' => $userId
+            ];
         }
         return false;
     }
