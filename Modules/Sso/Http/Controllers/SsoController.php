@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Sso\Services\SsoService;
+use MongoDB\Driver\Session;
 
 class SsoController extends Controller
 {

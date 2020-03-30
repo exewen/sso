@@ -17,7 +17,7 @@ class SsoService
     {
         $ticket = md5($request->getClientIp() . $user->id . time());
         $source = $request->input('source');
-        Cache::put($ticket, $user->id, 120);
+        Cache::put($ticket, $user, 120);
         if ($source) {
             $url = $source . '?ticket=' . $ticket;
             return redirect($url);
@@ -25,12 +25,19 @@ class SsoService
         return false;
     }
 
+    /**
+     * 验证权限票据
+     * @param $request
+     * @return array|bool
+     */
     public function ticketAuth($request)
     {
-        $userId = Cache::pull($request->input('ticket'));
-        if ($userId) {
+        $userInfo = Cache::pull($request->input('ticket'));
+        if ($userInfo) {
             return [
-                'user_id' => $userId
+                'user' => $userInfo,
+                'group' => '',
+                'auth' => '',
             ];
         }
         return false;
