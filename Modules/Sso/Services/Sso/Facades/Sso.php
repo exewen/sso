@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Services\Sso\Facades;
+namespace Modules\Sso\Services\Sso\Facades;
 
 use Illuminate\Support\Facades\Facade;
-use App\Services\Sso\SsoService;
+use Modules\Sso\Services\Sso\SsoService;
 
 class Sso extends Facade
 {

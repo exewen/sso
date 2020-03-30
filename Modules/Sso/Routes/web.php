@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,14 +10,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-//Auth::routes();
-//Route::group(['middleware'=>['auth']], function() {
-//    Route::get('/', 'SsoController@index')->name('home');
+
+//Route::prefix('sso')->group(function() {
+//    Route::get('/', 'SsoController@index');
 //});
 
-//Auth::routes();
+Route::group(['prefix' => 'sso', 'middleware' => ['auth']], function () {
 
-
-
-
-
+    Route::get('/', 'SsoController@index')->name('sso');
+});
