@@ -14,7 +14,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
-        $this->import();
     }
 
     /**
@@ -25,15 +24,5 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-    }
-
-    /**
-     * 引入自定义的头文件
-     *
-     * @return void
-     */
-    private function import()
-    {
-        require_once app_path().'/General/headers.php';
     }
 }
