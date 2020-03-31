@@ -18,9 +18,7 @@ class SsoController extends Controller
     {
         $user = \Auth::user();
         $response = $ssoService->redirect($request, $user);
-        if ($response !== false) return $response;
-        return view('home');
-        //return view('sso::index');
+        return $response !== false ? $response : view('home');
     }
 
     /**
