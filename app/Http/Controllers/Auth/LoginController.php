@@ -40,6 +40,12 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    /**
+     * sso登陆跳转
+     * @param Request $request
+     * @param $user
+     * @return bool|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     protected function authenticated(Request $request, $user)
     {
         $ssoService = new SsoService();

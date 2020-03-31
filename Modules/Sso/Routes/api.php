@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 //    return $request->user();
 //});
 Route::group(['prefix' => 'sso','namespace'=>'master', 'middleware' => ['api']], function () {
+    // 票据获取登陆
     Route::get('/ticket_auth', 'SsoAuthController@ticketAuth');
 });
 
