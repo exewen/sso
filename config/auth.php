@@ -74,12 +74,12 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Models\User::class,
         ],
 
         'sso' => [
             'driver' => 'eloquent',
-            'model' => App\SsoUser::class,
+            'model' => App\Models\Sso\SsoUser::class,
         ],
 
         // 'users' => [
