@@ -6,11 +6,9 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class SsoUser extends Authenticatable
 {
     use Notifiable;
-
-    protected  $table = 'sso_users';
 
     /**
      * The attributes that are mass assignable.

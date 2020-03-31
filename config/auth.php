@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'web',
-        'passwords' => 'users',
+        'guard' => 'ssoWeb',
+        'passwords' => 'sso',
     ],
 
     /*
@@ -46,6 +46,12 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'ssoWeb' => [
+            'driver' => 'session',
+            'provider' => 'sso',
+        ],
+
     ],
 
     /*
@@ -69,6 +75,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\User::class,
+        ],
+
+        'sso' => [
+            'driver' => 'eloquent',
+            'model' => App\SsoUser::class,
         ],
 
         // 'users' => [
@@ -96,6 +107,13 @@ return [
         'users' => [
             'provider' => 'users',
             'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'sso' => [
+            'provider' => 'sso',
+            'table' => 'sso_password_resets',
             'expire' => 60,
             'throttle' => 60,
         ],
