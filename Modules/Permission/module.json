@@ -1,0 +1,13 @@
+{
+    "name": "Permission",
+    "alias": "permission",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Permission\\Providers\\PermissionServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

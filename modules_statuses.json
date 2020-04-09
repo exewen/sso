@@ -1,3 +1,4 @@
 {
-    "Sso": true
+    "Sso": true,
+    "Permission": true
 }

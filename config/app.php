@@ -175,6 +175,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //Repository provider
+        App\Providers\ViewComposerServiceProvider::class,
+
+        App\Providers\PermissionServiceProvider::class,
     ],
 
     /*
@@ -227,6 +231,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Permission' => App\Services\Facades\Permission::class,
     ],
 
 ];

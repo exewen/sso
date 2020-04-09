@@ -1,4 +1,18 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/js/app.js": "/js/app.js?id=27715cd1fd1fd9c7ad41",
+    "/assets/css/application.min.css": "/assets/css/application.min.css?id=e3a5f6e3bc3a1e54d0e3",
+    "/css/app.css": "/css/app.css?id=7cab58508017b184d0f2",
+    "/assets/css/bootstrap.min.css": "/assets/css/bootstrap.min.css?id=7184d3edc008c1890deb",
+    "/assets/css/jquery.mloading.css": "/assets/css/jquery.mloading.css?id=f86c2dab48b95cfd1b35",
+    "/assets/imagezoom/jquery.imagezoom.min.js": "/assets/imagezoom/jquery.imagezoom.min.js?id=28c82e5f30145d1d5985",
+    "/assets/js/jquery.media.js": "/assets/js/jquery.media.js?id=e9f55932adad7ebb8fa9",
+    "/assets/js/echarts.simple.min.js": "/assets/js/echarts.simple.min.js?id=cacab0ddf0cc97efbe1d",
+    "/assets/js/patpat-file-download.js": "/assets/js/patpat-file-download.js?id=d41d8cd98f00b204e980",
+    "/assets/js/export.js": "/assets/js/export.js?id=2b8bf3278376c8b7b37c",
+    "/assets/js/file-saver.js": "/assets/js/file-saver.js?id=cc22a57619babf4ed4d9",
+    "/assets/js/xlsx.core.min.js": "/assets/js/xlsx.core.min.js?id=220490504eb75de3523f",
+    "/assets/js/footable.min.js": "/assets/js/footable.min.js?id=ec9daa7e50614a0abdf5",
+    "/assets/css/style.min.css": "/assets/css/style.min.css?id=d41d8cd98f00b204e980",
+    "/assets/js/application.min.js": "/assets/js/application.min.js?id=81051bcc2cf1bedf3782",
+    "/assets/js/application_new.min.js": "/assets/js/application_new.min.js?id=81051bcc2cf1bedf3782"
 }

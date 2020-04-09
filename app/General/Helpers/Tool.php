@@ -256,3 +256,17 @@ if (!function_exists('validate_heading')) {
     }
 
 }
+
+if (!function_exists('starts_with')) {
+    /**
+     * Determine if a given string starts with a given substring.
+     *
+     * @param string $haystack
+     * @param string|array $needles
+     * @return bool
+     */
+    function starts_with($haystack, $needles)
+    {
+        return strpos($needles, $haystack) === 0 ? true : false;
+    }
+}
