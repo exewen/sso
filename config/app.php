@@ -179,6 +179,7 @@ return [
         App\Providers\ViewComposerServiceProvider::class,
 
         App\Providers\PermissionServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
     ],
 
     /*
@@ -232,6 +233,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Permission' => App\Services\Facades\Permission::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ],
 
 ];

@@ -17,6 +17,12 @@ Route::group(['middleware'=>['web']], function()
     Route::get('/',function(){
         return redirect('/dashboard');
     });
+    // 登录页面
+    Route::get('/auth/login',['uses'=>'Auth\LoginController@showLoginForm'])->name('login');
+    // 退出
+    Route::get('/auth/logout',['uses'=>'Auth\LoginController@logout'])->name('logout');
+    // 登录确认
+    Route::post('/auth/login',['uses'=>'Auth\LoginController@login']);
 });
 
 /*dashboard*/

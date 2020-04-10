@@ -12,9 +12,3 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// 登陆模块
-Auth::routes();
-Route::get('logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/', function () {
-    return redirect('/sso');
-});

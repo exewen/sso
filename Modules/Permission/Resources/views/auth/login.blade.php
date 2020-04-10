@@ -49,9 +49,9 @@
                         <input name="_token" type="hidden" value="{!! csrf_token() !!}" />
 
                         <div class="form-group">
-                            <label class="col-sm-4 control-label">用户名</label>
+                            <label class="col-sm-4 control-label">邮箱</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control" name="account" required oninvalid="this.setCustomValidity('用户名必填')" placeholder="请输入邮箱账号">
+                                <input type="text" class="form-control" name="email" required placeholder="请输入邮箱账号">
                             </div>
                         </div>
                         <div class="form-group">

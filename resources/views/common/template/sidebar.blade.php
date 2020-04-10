@@ -7,7 +7,7 @@
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
-                <div class="dropdown profile-element"> 
+                <div class="dropdown profile-element">
                     {{--<span>--}}
                     {{--<a href="/dashboard"><img alt="image" class="img-circle" src="{{ asset ('/assets/img/patpat_logo.png')}}" width="40px" height="40px"/></a>--}}
                     {{--</span>--}}

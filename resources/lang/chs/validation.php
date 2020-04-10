@@ -133,6 +133,10 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'captcha' => [
+            'required' => '验证码不能为空',
+            "captcha"   => "验证码不匹配",
+        ],
     ],
 
     /*
