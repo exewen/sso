@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Models\Customer\Customer;
+use App\Models\Subsystem\Subsystem;
 use App\Models\Permission\AuthRule;
 use App\Models\Permission\AuthGroup;
 use App\Models\Permission\User;
@@ -83,7 +83,7 @@ class PermissionService
             $ruleIds = array_unique(array_merge(explode(',', $item->rule_ids), $ruleIds));
         }
         $userPermissions = $this->getUserPermissions($ruleIds, $isRoot);
-        $internalCustomer = Customer::query()->where('name', AuthGroup::INTERNAL_CUSTOMER_NAME)->first(['id']);
+        $internalCustomer = Subsystem::query()->where('name', AuthGroup::INTERNAL_CUSTOMER_NAME)->first(['id']);
         $authsCache = [
             'internalCustomerId' => isset($internalCustomer->id) ? $internalCustomer->id : 0,// 内部平台客户ID
             'userType' => $user->type,// 用户账号类型
@@ -266,6 +266,8 @@ class PermissionService
      */
     public function menusTemplate()
     {
+        $templates = \Config::get('template')['menus'];
+        return ['menus' => $templates];
         $menusTemplate = ['menus' => []];
         $user = auth()->user();
         $permissionDetails = $this->getCurrentPermission($user)['permissionDetails'];
@@ -381,7 +383,7 @@ class PermissionService
     public function getInternalCustomerId($forceQuery = false)
     {
         if ($forceQuery) {
-            $platform = Customer::query()->where('name', AuthGroup::INTERNAL_CUSTOMER_NAME)->first(['id']);
+            $platform = Subsystem::query()->where('name', AuthGroup::INTERNAL_CUSTOMER_NAME)->first(['id']);
             return $platform->id;
         } else {
             $user = auth()->user();
@@ -389,7 +391,7 @@ class PermissionService
             if (!empty($currentPermissions['internalCustomerId'])) {
                 return $currentPermissions['internalCustomerId'];
             } else {
-                $platform = Customer::query()->where('name', AuthGroup::INTERNAL_CUSTOMER_NAME)->first(['id']);
+                $platform = Subsystem::query()->where('name', AuthGroup::INTERNAL_CUSTOMER_NAME)->first(['id']);
                 return $platform->id;
             }
         }

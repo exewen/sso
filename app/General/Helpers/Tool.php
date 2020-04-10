@@ -1,4 +1,67 @@
 <?php
+if (!function_exists('starts_with')) {
+    /**
+     * Determine if a given string starts with a given substring.
+     *
+     * @param string $haystack
+     * @param string|array $needles
+     * @return bool
+     */
+    function starts_with($haystack, $needles)
+    {
+        return strpos($needles, $haystack) === 0 ? true : false;
+    }
+}
+
+/**
+ * 根据 URI 获取路径的面包屑导航
+ */
+function getPathCate($uri)
+{
+    if (!$uri || empty($uri)) return '';
+    $uri = explode('?', $uri);  //去除查询字符串
+    $uri = $uri[0];
+
+    $path = [];
+    $path[$uri][] = "<li><a href='javascript:void(0)'>Home</a></li>";
+    $templates = \Permission::menusTemplate();
+    foreach ($templates['menus'] as $key => $menus) {
+        if (is_array($menus['menus']) && !empty($menus['menus'])) {
+            foreach ($menus['menus'] as $k => $menu) {
+                $menu_link = $menu['link'];
+                $menu_link = explode('?', $menu_link);  //去除查询字符串
+                if ($menu_link[0] == $uri) {
+                    $path[$uri][] = "<li><a href='javascript:void(0)'>" . $menus['title'] . "</a></li>";
+                    $path[$uri][] = "<li><a href={$menu['link']}  class='active'><strong>" .$menu['title']. "</strong></a></li>";
+                    break 2;
+                }
+            }
+        }
+    }
+    return implode('', $path[$uri]);
+}
+
+/**
+ * 根据 path 获取菜单的名称
+ * @param $path
+ * @return string
+ */
+function getMenuTitle($path)
+{
+    if (!$path) return '';
+    $templates = \Permission::menusTemplate();
+    $path = '/'.$path;
+    foreach ($templates['menus'] as $key => $menus) {
+        if (is_array($menus['menus']) && !empty($menus['menus'])) {
+            foreach ($menus['menus'] as $k => $menu) {
+                if ($menu['link'] == $path) {
+                    return $menu['title'];
+                }
+            }
+        }
+    }
+}
+
 
 if (!function_exists('validate_heading')) {
     /**
@@ -26,247 +89,5 @@ if (!function_exists('validate_heading')) {
             }
         }
         return ['status' => true];
-    }
-
-    /**
-     * get browser information
-     * @return array
-     */
-    function getBrowser()
-    {
-        $bname = 'Unknown';
-        $platform = 'Unknown';
-        $version= "";
-        $ub = "";
-        try{
-            $u_agent = $_SERVER['HTTP_USER_AGENT'];
-        }catch (Exception $e){
-            $u_agent = 'Unknown';
-            Log::error($e->getMessage());
-        }
-
-        //First get the platform?
-        if (preg_match('/linux/i', $u_agent)) {
-            $platform = 'linux';
-        }
-        elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
-            $platform = 'mac';
-        }
-        elseif (preg_match('/windows|win32/i', $u_agent)) {
-            $platform = 'windows';
-        }
-
-        // Next get the name of the useragent yes seperately and for good reason
-        if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent))
-        {
-            $bname = 'Internet Explorer';
-            $ub = "MSIE";
-        }
-        elseif(preg_match('/Firefox/i',$u_agent))
-        {
-            $bname = 'Mozilla Firefox';
-            $ub = "Firefox";
-        }
-        elseif(preg_match('/Chrome/i',$u_agent))
-        {
-            $bname = 'Google Chrome';
-            $ub = "Chrome";
-        }
-        elseif(preg_match('/Safari/i',$u_agent))
-        {
-            $bname = 'Apple Safari';
-            $ub = "Safari";
-        }
-        elseif(preg_match('/Opera/i',$u_agent))
-        {
-            $bname = 'Opera';
-            $ub = "Opera";
-        }
-        elseif(preg_match('/Netscape/i',$u_agent))
-        {
-            $bname = 'Netscape';
-            $ub = "Netscape";
-        }
-
-        // finally get the correct version number
-        $known = array('Version', $ub, 'other');
-        $pattern = '#(?<browser>' . join('|', $known) .
-            ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-        if (!preg_match_all($pattern, $u_agent, $matches)) {
-            // we have no matching number just continue
-        }
-
-        try{
-            // see how many we have
-            $i = count($matches['browser']);
-            if ($i != 1) {
-                //we will have two since we are not using 'other' argument yet
-                //see if version is before or after the name
-                if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-                    $version= $matches['version'][0];
-                }
-                else {
-                    $version= $matches['version'][1];
-                }
-            }
-            else {
-                $version= $matches['version'][0];
-            }
-        }catch (Exception $e){
-            $version='';
-            Log::error($e->getMessage());
-        }
-
-        // check if we have a number
-        if ($version==null || $version=="") {$version="?";}
-
-        return array(
-            'userAgent' => $u_agent,
-            'name'      => $bname.'_'.$version,
-            'version'   => $version,
-            'platform'  => $platform,
-            'pattern'    => $pattern
-        );
-    }
-
-    function isHttps()
-    {
-        if ( ! empty($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) !== 'off')
-        {
-            return TRUE;
-        }
-        elseif (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
-        {
-            return TRUE;
-        }
-        elseif ( ! empty($_SERVER['HTTP_FRONT_END_HTTPS']) && strtolower($_SERVER['HTTP_FRONT_END_HTTPS']) !== 'off')
-        {
-            return TRUE;
-        }
-        return FALSE;
-    }
-
-    function cdnUrl($url,$is_https=false)
-    {
-        if(!$url || empty($url))return $url;
-        $cnd_url = env('SOURCE_CND_URL','');
-        $asset_cnd_url = env('ASSET_CND_URL','');
-        if(!starts_with($url, 'http') && !starts_with($url, 'https')){
-            $url = ($is_https || isHttps())?secure_url($url):url($url);
-        }
-        $cnd_url = 'img.ppwebstatic.com';
-        $asset_cnd_url = 'img.ppwebstatic.com';
-        $cdn_infos=[
-            "www.interfocus.org" => $asset_cnd_url,
-            "www.patpat.com" => $asset_cnd_url,
-            "patpatwebstatic.s3.us-west-2.amazonaws.com" => $cnd_url,
-            "patpatdev.s3.us-west-1.amazonaws.com" => $cnd_url,
-            "patpatdev.s3-us-west-1.amazonaws.com" => $cnd_url,
-            "patpatasset.s3.amazonaws.com" => $asset_cnd_url,
-            "patpatdev.s3.amazonaws.com" => $cnd_url,
-            "s3-us-west-1.amazonaws.com" => $cnd_url,
-            "patpatdev.img.ppwebstatic.com"=>$cnd_url,
-            "patpatdev.img.patpat.com"=>$cnd_url
-        ];
-        foreach (array_keys($cdn_infos) as $index=>$origin_host){
-            if(str_contains($url,$origin_host) && !empty($cdn_infos[$origin_host])){
-                $url=str_replace($origin_host,$cdn_infos[$origin_host],$url);
-                break;
-            }
-        }
-        return $url;
-    }
-
-
-    /**图片无损压缩
-     * @param $original_url
-     * @param $save_as
-     * @param int $width
-     * @param int $height
-     */
-    function imgResize($original_url,$save_as, $width = 200, $height =200)
-    {
-        $img = \Image::make($original_url);
-        $img->resize($width, $height,
-            function ($constraint) {
-                $constraint->aspectRatio();
-            })->resizeCanvas($width, $height, "center", false, "#fff");
-        $img->save($save_as, 100);
-        // 无损压缩优化
-        $factory = new \ImageOptimizer\OptimizerFactory();
-        $optimizer = $factory->get();// SmartOptimizer
-        $optimizer->optimize($save_as);
-    }
-
-
-    /**
-     *
-     */
-  function getLogisticsCirculation($contry, $mode, $total)
-  {
-
-
-  }
-
-    /**
-     * UTC时间转北京时间
-     * @param $date
-     * @return false|string
-     */
-  function utcToBeijingConversion($date){
-      if(empty($date) || '0000-00-00 00:00:00' == $date){
-          return '';
-      }
-      $date = date("Y-m-d H:i:s",strtotime($date.' +8 hours'));
-      return $date;
-  }
-
-    /**
-     * 北京时间转UTC时间
-     * @param $date
-     * @return false|string
-     */
-    function beijingToutcConversion($date){
-        if(empty($date)){
-            return '';
-        }
-        $date = date("Y-m-d H:i:s",strtotime($date.' -8 hours'));
-        return $date;
-    }
-
-    /**
-     * UTC时间转北京时间
-     * @param $date
-     * @return false|string
-     */
-    function utcToAsiaDate($date){
-        if(empty($date) || $date=='0000-00-00 00:00:00'){
-            return '';
-        }
-        $date = \Carbon\Carbon::parse($date)->addHour(8);
-        return $date;
-    }
-
-    function asiaToUtcDate($date){
-        if(empty($date) || $date=='0000-00-00 00:00:00'){
-            return '';
-        }
-        $date = \Carbon\Carbon::parse($date)->subHour(8);
-        return $date;
-    }
-
-}
-
-if (!function_exists('starts_with')) {
-    /**
-     * Determine if a given string starts with a given substring.
-     *
-     * @param string $haystack
-     * @param string|array $needles
-     * @return bool
-     */
-    function starts_with($haystack, $needles)
-    {
-        return strpos($needles, $haystack) === 0 ? true : false;
     }
 }

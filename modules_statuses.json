@@ -1,4 +1,5 @@
 {
     "Sso": true,
-    "Permission": true
+    "Permission": true,
+    "Subsystem": true
 }

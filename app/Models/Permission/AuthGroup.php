@@ -3,7 +3,7 @@
 namespace App\Models\Permission;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Customer\Customer;
+use App\Models\Subsystem\Subsystem;
 class AuthGroup extends Model
 {
     /**
@@ -58,6 +58,6 @@ class AuthGroup extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id', 'id');
+        return $this->belongsTo(Subsystem::class, 'customer_id', 'id');
     }
 }

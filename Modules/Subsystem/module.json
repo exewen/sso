@@ -1,0 +1,13 @@
+{
+    "name": "Subsystem",
+    "alias": "subsystem",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Subsystem\\Providers\\SubsystemServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

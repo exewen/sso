@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Models\Customer;
+namespace App\Models\Subsystem;
 
-use App\Events\CustomerCreatedOrUpdatedEvent;
 use Illuminate\Database\Eloquent\Model;
 
-class Customer extends Model
+class Subsystem extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = "sso_customer";
+    protected $table = "sso_subsystem";
     /**
      * The attributes that are mass assignable.
      *

@@ -21,8 +21,7 @@ class TemplateComposer
      */
     private function configureLeftSideMenu($view)
     {
-        $menus = Config::get('template')['menus'];
-        //$menus = \Permission::menusTemplate()['menus'];
+        $menus = \Permission::menusTemplate()['menus'];
         $url_path = Request::path();
 
         $is_open = false;
